@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: crypto-data
+  name: api-kafka-consumer
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: crypto-data-deployment
+    name: api-kafka-consumer-deployment
   minReplicas: 1
   maxReplicas: 10
   metrics:

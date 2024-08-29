@@ -1,4 +1,4 @@
-package com.xavelo.crypto;
+package com.xavelo.kafka;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
