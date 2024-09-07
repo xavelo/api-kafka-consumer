@@ -21,19 +21,11 @@ public class KafkaConsumerController {
     private String podName;
 
     @Autowired
-    private GitProperties gitProperties;
-
-    @Autowired
     private KafkaListener kafkaListener;
 
-    @GetMapping("/hello")
-    public ResponseEntity<Hello> hello() {
-        String commitId = gitProperties.getCommitId();
-        LocalDateTime dateTime = LocalDateTime.ofInstant(gitProperties.getCommitTime(), ZoneId.systemDefault());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String commitTime = dateTime.format(formatter);
-        logger.info("hello from pod {} - commitId {} - commitTime {}", commitId, commitTime, podName);
-        return ResponseEntity.ok(new Hello("hello from pod " + podName, commitId + " - " + commitTime));
+    @GetMapping("/ping")
+    public ResponseEntity<String> ping() {
+        return ResponseEntity.ok("ping from pod " + podName);
     }
 
     @GetMapping("/consume")
