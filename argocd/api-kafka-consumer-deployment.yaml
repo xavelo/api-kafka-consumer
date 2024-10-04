@@ -5,7 +5,7 @@ metadata:
   annotations:
     commitID: "166c593af288f9597f393db9aee991b6466184ff"
 spec:
-  replicas: 2
+  # replicas: 2 - to be managed KEDA HPA
   selector:
     matchLabels:
       app: api-kafka-consumer
