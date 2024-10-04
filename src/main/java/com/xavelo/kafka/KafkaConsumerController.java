@@ -16,6 +16,7 @@ public class KafkaConsumerController {
 
     @GetMapping("/ping")
     public ResponseEntity<String> ping() {
+        logger.info("ping from pod {}", podName);
         return ResponseEntity.ok("ping from pod " + podName);
     }
 
