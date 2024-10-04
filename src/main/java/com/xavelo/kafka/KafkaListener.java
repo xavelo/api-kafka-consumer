@@ -18,8 +18,7 @@ public class KafkaListener {
 
     @org.springframework.kafka.annotation.KafkaListener(topics = "test-topic", groupId = "test-group", containerFactory = "kafkaListenerContainerFactory")
     public void consume(String message) {
-        logger.info("Received message: {}", message);
-        String sql = "INSERT INTO messages (message) VALUES (?)";
+        logger.info("Received message: {}", message);        
         checkCollection();
         saveMessage(message);
         Message msg = findMessageByKey("key");
