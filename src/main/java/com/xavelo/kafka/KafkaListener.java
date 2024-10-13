@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 
 @Service
@@ -19,9 +18,8 @@ public class KafkaListener {
     private final MongoAdapter mongoAdapter;
     private final ObjectMapper objectMapper;
     private final KafkaTemplate<String, String> kafkaTemplate;
-
-    @Value("${spring.kafka.consumer.max-retries}")
-    private int MAX_RETRIES; 
+    
+    private static final int MAX_RETRIES = 3; 
 
     public KafkaListener(MongoAdapter mongoAdapter, ObjectMapper objectMapper, KafkaTemplate<String, String> kafkaTemplate) {
         this.mongoAdapter = mongoAdapter;
