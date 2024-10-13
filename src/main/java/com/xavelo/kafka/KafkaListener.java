@@ -54,6 +54,13 @@ public class KafkaListener {
                 logger.error("Attempt {}: error {} processing message {}", attempt, e.getMessage(), message);
                 if (attempt >= MAX_RETRIES) {
                     sendToDLQ(message); // Send to DLQ after max retries
+                } else {
+                    // Exponential backoff delay
+                    try {
+                        Thread.sleep((long) Math.pow(2, attempt) * 1000); // Delay in milliseconds
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt(); // Restore interrupted status
+                    }
                 }
             }
         }
