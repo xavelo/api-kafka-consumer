@@ -1,5 +1,6 @@
 package com.xavelo.kafka;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +26,9 @@ public class KafkaListener {
     }
 
     @org.springframework.kafka.annotation.KafkaListener(topics = "test-topic", groupId = "test-group", containerFactory = "kafkaListenerContainerFactory")
-    public void consume(String message) {
-        logger.info("Received message: {}", message);
-        process(message);
+    public void consume(ConsumerRecord<String, String> record)  {
+        logger.info("Received kafka record: key{} - value {}, Offset: {}", record.key(), record.value(), record.offset());
+        process(record.value());
         logger.info("message successfully processed");
     }
 
