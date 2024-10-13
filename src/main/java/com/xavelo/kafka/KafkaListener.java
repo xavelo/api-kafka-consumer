@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 
 @Service
@@ -18,6 +19,9 @@ public class KafkaListener {
     private final MongoAdapter mongoAdapter;
     private final ObjectMapper objectMapper;
     private final KafkaTemplate<String, String> kafkaTemplate;
+
+    @Value("${spring.kafka.consumer.max-retries}")
+    private int MAX_RETRIES; 
 
     public KafkaListener(MongoAdapter mongoAdapter, ObjectMapper objectMapper, KafkaTemplate<String, String> kafkaTemplate) {
         this.mongoAdapter = mongoAdapter;
@@ -33,19 +37,26 @@ public class KafkaListener {
     }
 
     // dummy processor to simple parse JSON messages and send to DLQ in case of error
-    private void process(String message) {
-        try {
-            Message json = objectMapper.readValue(message, Message.class);
+    private void process(String message) {        
+        int attempt = 0;
 
-            mongoAdapter.checkCollection();
-            mongoAdapter.saveMessage(json);
-            mongoAdapter.findMessageByKey(json.getKey());
+        while (attempt < MAX_RETRIES) {
+            try {
+                Message json = objectMapper.readValue(message, Message.class);
 
-        } catch (JsonProcessingException e) {
-            logger.error("error {} processing message {}", e.getMessage(), message);
-            sendToDLQ(message);
+                mongoAdapter.checkCollection();
+                mongoAdapter.saveMessage(json);
+                mongoAdapter.findMessageByKey(json.getKey());
+                return; // Exit if processing is successful
+
+            } catch (JsonProcessingException e) {
+                attempt++;
+                logger.error("Attempt {}: error {} processing message {}", attempt, e.getMessage(), message);
+                if (attempt >= MAX_RETRIES) {
+                    sendToDLQ(message); // Send to DLQ after max retries
+                }
+            }
         }
-
     }
 
     // New method to send message to DLQ
