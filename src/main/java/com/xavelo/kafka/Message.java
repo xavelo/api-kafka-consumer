@@ -13,4 +13,3 @@ public class Message {
     @JsonProperty
     private String value;
 }
-
