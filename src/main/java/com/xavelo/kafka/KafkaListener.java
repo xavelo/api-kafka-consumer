@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.Acknowledgment;
 
 @Service
 public class KafkaListener {
@@ -28,10 +29,11 @@ public class KafkaListener {
     }
 
     @org.springframework.kafka.annotation.KafkaListener(topics = "test-topic", groupId = "test-group", containerFactory = "kafkaListenerContainerFactory")
-    public void consume(ConsumerRecord<String, String> record)  {
+    public void consume(ConsumerRecord<String, String> record, Acknowledgment acknowledgment)  {
         logger.info("Received kafka record: key{} - value {}, Offset: {}", record.key(), record.value(), record.offset());
-        process(record.value());
-        logger.info("message successfully processed");
+        process(record.value());       
+        // Manually commit the offset
+        acknowledgment.acknowledge();
     }
 
     // dummy processor to simple parse JSON messages and send to DLQ in case of error
@@ -45,7 +47,9 @@ public class KafkaListener {
                 mongoAdapter.checkCollection();
                 mongoAdapter.saveMessage(json);
                 mongoAdapter.findMessageByKey(json.getKey());
-                return; // Exit if processing is successful
+
+                logger.info("message successfully processed");
+                return;
 
             } catch (JsonProcessingException e) {
                 attempt++;
