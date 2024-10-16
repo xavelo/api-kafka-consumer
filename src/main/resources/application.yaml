@@ -8,6 +8,8 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       auto-offset-reset: earliest
       enable-auto-commit: false
+    listener:
+      ack-mode: MANUAL
     producer:
       bootstrap-servers: my-cluster-kafka-bootstrap.default.svc:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
