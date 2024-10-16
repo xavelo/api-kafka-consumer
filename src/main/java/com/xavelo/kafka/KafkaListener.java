@@ -33,7 +33,7 @@ public class KafkaListener {
         logger.info("Received kafka record: key{} - value {}, Offset: {}", record.key(), record.value(), record.offset());
         process(record.value());       
         // Manually commit the offset
-        acknowledgment.acknowledge();
+        //acknowledgment.acknowledge();
     }
 
     // dummy processor to simple parse JSON messages and send to DLQ in case of error
