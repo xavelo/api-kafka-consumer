@@ -16,14 +16,13 @@ public class KafkaListener {
 
     private static final Logger logger = LoggerFactory.getLogger(KafkaListener.class);
 
-    private final MongoAdapter mongoAdapter;
+    //private final MongoAdapter mongoAdapter;
     private final ObjectMapper objectMapper;
     private final KafkaTemplate<String, String> kafkaTemplate;
     
     private static final int MAX_RETRIES = 3; 
 
-    public KafkaListener(MongoAdapter mongoAdapter, ObjectMapper objectMapper, KafkaTemplate<String, String> kafkaTemplate) {
-        this.mongoAdapter = mongoAdapter;
+    public KafkaListener(ObjectMapper objectMapper, KafkaTemplate<String, String> kafkaTemplate) {
         this.objectMapper = objectMapper;
         this.kafkaTemplate = kafkaTemplate;
     }
@@ -36,6 +35,7 @@ public class KafkaListener {
     }
 
     // dummy processor to simple parse JSON messages and send to DLQ in case of error
+    /*
     private void process(String message) {        
         int attempt = 0;
 
@@ -66,6 +66,7 @@ public class KafkaListener {
             }
         }
     }
+    */
 
     // New method to send message to DLQ
     private void sendToDLQ(String message) {       

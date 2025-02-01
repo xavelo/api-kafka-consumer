@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class MongoAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(MongoAdapter.class);
