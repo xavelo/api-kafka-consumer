@@ -32,15 +32,10 @@ public class KafkaListener {
     @org.springframework.kafka.annotation.KafkaListener(topics = "test-topic", groupId = "test-group", containerFactory = "kafkaListenerContainerFactory")
     public void consume(ConsumerRecord<String, String> record, Acknowledgment acknowledgment)  {
         logger.info("Received kafka record: key {} - value {}, Offset: {}", record.key(), record.value(), record.offset());
-        processFakeCompute(record.value());
         service.simulateExpensiveOperation();
         //process(record.value());
         acknowledgment.acknowledge();
-    }
-
-    private void processFakeCompute(String message) {
-
-    }
+    }clean
 
     // dummy processor to simple parse JSON messages and send to DLQ in case of error
     /*
