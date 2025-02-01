@@ -35,7 +35,8 @@ public class KafkaListener {
         service.simulateExpensiveOperation();
         //process(record.value());
         acknowledgment.acknowledge();
-    }clean
+    }
+
 
     // dummy processor to simple parse JSON messages and send to DLQ in case of error
     /*
