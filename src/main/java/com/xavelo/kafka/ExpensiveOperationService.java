@@ -10,7 +10,7 @@ public class ExpensiveOperationService {
     private static final Logger logger = LogManager.getLogger(ExpensiveOperationService.class);
 
     public void simulateExpensiveOperation() {
-        logger.debug("Starting expensive operation...");
+        logger.info("Starting expensive operation...");
         long start = System.nanoTime();
         // Simulate an expensive computational operation, e.g., calculating primes
         long primes = 0;
@@ -20,7 +20,7 @@ public class ExpensiveOperationService {
             }
         }
         long end = System.nanoTime();
-        logger.debug("Found " + primes + " primes in " + (end - start) / 1_000_000 + " ms.");
+        logger.info("Found " + primes + " primes in " + (end - start) / 1_000_000 + " ms.");
     }
 
     private boolean isPrime(int number) {
