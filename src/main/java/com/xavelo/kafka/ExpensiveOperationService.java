@@ -14,7 +14,7 @@ public class ExpensiveOperationService {
         long start = System.nanoTime();
         // Simulate an expensive computational operation, e.g., calculating primes
         long primes = 0;
-        for (int i = 2; i < 1000000; i++) {
+        for (int i = 2; i < 10000000; i++) {
             if (isPrime(i)) {
                 primes++;
             }
