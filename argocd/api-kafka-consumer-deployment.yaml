@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: api-kafka-consumer-deployment
   annotations:
-    commitID: "24cf8af5f51fd35d9c6ecb6de3768cfc89c33981"
+    commitID: "79e3a8d98d791adb133c7277ca15ec1595fe9ac2"
 spec:
   # replicas: 2 - to be managed KEDA HPA
   selector:
@@ -21,6 +21,6 @@ spec:
     spec:
       containers:
         - name: api-kafka-consumer
-          image: 'xavelo/api-kafka-consumer:24cf8af5f51fd35d9c6ecb6de3768cfc89c33981'
+          image: 'xavelo/api-kafka-consumer:79e3a8d98d791adb133c7277ca15ec1595fe9ac2'
           ports:
             - containerPort: 80
