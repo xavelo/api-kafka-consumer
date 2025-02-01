@@ -8,7 +8,7 @@ spec:
     kind: Deployment
     name: api-kafka-consumer-deployment
   minReplicas: 1
-  maxReplicas: 2
+  maxReplicas: 4
   metrics:
     - type: Resource
       resource:
@@ -16,3 +16,10 @@ spec:
         target:
           type: Utilization
           averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 30  # Minimum time to wait before scaling down (default is 300s)
+      policies:
+        - type: Percent
+          value: 50   # Reduce by 50% of current replicas at a time
+          periodSeconds: 30  # Check every 30 seconds
