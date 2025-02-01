@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: api-kafka-consumer-deployment
   annotations:
-    commitID: "26784ab4e13dbc7ed32f74f7161c13418cbd7407"
+    commitID: "ad77c06aeaf03f0cbf55b22dd719bf9c3ee4c6c1"
 spec:
   # replicas: 2 - to be managed KEDA HPA
   replicas: 1
@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: api-kafka-consumer
-          image: 'xavelo/api-kafka-consumer:26784ab4e13dbc7ed32f74f7161c13418cbd7407'
+          image: 'xavelo/api-kafka-consumer:ad77c06aeaf03f0cbf55b22dd719bf9c3ee4c6c1'
           resources:
             requests:
               cpu: "500m" # Set CPU request to 500m (0.5 CPU core)
