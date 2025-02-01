@@ -1,4 +1,4 @@
-package com.xavelo.kafka;
+package com.xavelo.kafka.infrastructure.in.api;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

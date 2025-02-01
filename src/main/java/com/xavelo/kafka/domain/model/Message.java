@@ -1,4 +1,4 @@
-package com.xavelo.kafka;
+package com.xavelo.kafka.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

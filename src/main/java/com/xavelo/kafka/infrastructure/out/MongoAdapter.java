@@ -1,11 +1,11 @@
-package com.xavelo.kafka;
+package com.xavelo.kafka.infrastructure.out;
 
+import com.xavelo.kafka.domain.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Component;
 
 //@Component
 public class MongoAdapter {

@@ -1,11 +1,11 @@
-package com.xavelo.kafka;
+package com.xavelo.kafka.infrastructure.in.kafka;
 
+import com.xavelo.kafka.application.ExpensiveOperationService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.kafka.core.KafkaTemplate;
@@ -32,7 +32,7 @@ public class KafkaListener {
     @org.springframework.kafka.annotation.KafkaListener(topics = "test-topic", groupId = "test-group", containerFactory = "kafkaListenerContainerFactory")
     public void consume(ConsumerRecord<String, String> record, Acknowledgment acknowledgment)  {
         logger.info("Received kafka record: key {} - value {}, Offset: {}", record.key(), record.value(), record.offset());
-        //service.simulateExpensiveOperation();
+        service.simulateExpensiveOperation();
         //process(record.value());
         acknowledgment.acknowledge();
     }
