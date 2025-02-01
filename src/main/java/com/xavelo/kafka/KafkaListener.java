@@ -17,12 +17,14 @@ public class KafkaListener {
     private static final Logger logger = LoggerFactory.getLogger(KafkaListener.class);
 
     //private final MongoAdapter mongoAdapter;
+    private ExpensiveOperationService service;
     private final ObjectMapper objectMapper;
     private final KafkaTemplate<String, String> kafkaTemplate;
     
     private static final int MAX_RETRIES = 3; 
 
-    public KafkaListener(ObjectMapper objectMapper, KafkaTemplate<String, String> kafkaTemplate) {
+    public KafkaListener(ExpensiveOperationService service, ObjectMapper objectMapper, KafkaTemplate<String, String> kafkaTemplate) {
+        this.service = service;
         this.objectMapper = objectMapper;
         this.kafkaTemplate = kafkaTemplate;
     }
@@ -30,8 +32,14 @@ public class KafkaListener {
     @org.springframework.kafka.annotation.KafkaListener(topics = "test-topic", groupId = "test-group", containerFactory = "kafkaListenerContainerFactory")
     public void consume(ConsumerRecord<String, String> record, Acknowledgment acknowledgment)  {
         logger.info("Received kafka record: key {} - value {}, Offset: {}", record.key(), record.value(), record.offset());
+        processFakeCompute(record.value());
+        service.simulateExpensiveOperation();
         //process(record.value());
         acknowledgment.acknowledge();
+    }
+
+    private void processFakeCompute(String message) {
+
     }
 
     // dummy processor to simple parse JSON messages and send to DLQ in case of error
