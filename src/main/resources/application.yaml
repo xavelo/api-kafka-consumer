@@ -3,7 +3,7 @@ spring:
     name: api-kafka-consumer
   kafka:
     consumer:
-      bootstrap-servers: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
+      bootstrap-servers: my-kafka-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       auto-offset-reset: earliest
